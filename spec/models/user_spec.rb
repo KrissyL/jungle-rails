@@ -34,28 +34,28 @@ RSpec.describe User, type: :model do
   describe '.authenticate_with_credentials' do
     it 'should login in user with successful credentials' do
       @user.save
-      authentic = @user.authenticate_with_credentials(@user.email, @user.password)
+      authentic = User.authenticate_with_credentials(@user.email, @user.password)
 
       expect(authentic).to eql(@user)
     end
 
     it 'should not login in user with invalid credentials' do
       @user.save
-      unsuccessful = @user.authenticate_with_credentials(@user.email, @user.password = 'somepassword')
+      unsuccessful = User.authenticate_with_credentials(@user.email, @user.password = 'somepassword')
 
       expect(unsuccessful).to eql(nil)
     end
 
     it 'should login in user without email case-sensitivity' do
       @user.save
-      authenticate_email = @user.authenticate_with_credentials(@user.email = 'EMAIL@emaIL.Com', @user.password)
+      authenticate_email = User.authenticate_with_credentials(@user.email = 'EMAIL@emaIL.Com', @user.password)
 
       expect(authenticate_email).to eql(@user)
     end
 
     it 'should authenticate user regardless of whitespace around email' do
       @user.save
-      with_whitespace = @user.authenticate_with_credentials(@user.email = ' EMAIL@emaIL.Com ', @user.password)
+      with_whitespace = User.authenticate_with_credentials(@user.email = ' EMAIL@emaIL.Com ', @user.password)
 
       expect(with_whitespace).to eql(@user)
     end
